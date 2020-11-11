@@ -12,3 +12,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.amarillo {
+  background-color: yellow;
+}
+
+.naranja {
+  background-color: orange;
+}

@@ -2,11 +2,11 @@
 const grilla = document.querySelector(".grilla")
 const botonNuevoJuego = document.querySelector("#nuevo-juego")
 const botonReiniciarJuego = document.querySelector("#reiniciar-juego")
-console.log(botonNuevoJuego, botonReiniciarJuego)
+const botonMatch = document.querySelector("#buscar-match")
 
 alert('Bienvenidx')
 
-const items = ['🍉', '🍐', '🍌', '🍇', '🍎', '🍊']
+const items = ['🍉', '🥝', '🍌', '🍇', '🍋', '🥥']
 
 const obtenerNumeroAlAzar = items => {
   return Math.floor((Math.random() * items.length))  
@@ -16,25 +16,25 @@ const obtenerItemAlAzar = items => {
   return items[obtenerNumeroAlAzar(items)]
 }
 
+let listaDeFrutas = [];
+
 const generarGrilla = (filas, columnas, items) => {
 
   const anchoDeGrilla = 50 * filas
   grilla.style.width = `${anchoDeGrilla}px`;
-
-  let listaDeFrutas = [];
-  
+ 
   for (let i = 0; i < filas; i++) {
     listaDeFrutas[i] = [];
     for (let j = 0; j < columnas; j++) {
       listaDeFrutas[i][j] = obtenerItemAlAzar(items)
 
-      grilla.innerHTML += `<div class="item">${listaDeFrutas[i][j]}</div>`
+      grilla.innerHTML += `<div class="item" data-x="${i}" data-y="${j}">${listaDeFrutas[i][j]}</div>`
     }    
   }
-  
+
   return grilla
 }
-
+console.log(listaDeFrutas)
 
 
 let dificultad = ''
@@ -71,8 +71,39 @@ botonNuevoJuego.onclick = () => {
 botonReiniciarJuego.onclick = () => {
   grilla.innerHTML = ''
   generarGrilla(dificultad, dificultad, items)
+
   if (dificultad === '') {
     grilla.innerHTML = ''
     dificultadJuego()
   }
+}
+
+
+let itemsHTML = document.querySelectorAll('.item')
+console.log(itemsHTML)
+
+const encontrarMatchHorizontal = () => {
+
+  for (let i = 0; i < listaDeFrutas.length; i++) {
+      
+    for (let j = 0; j < listaDeFrutas[i].length; j++) {
+       
+      if (listaDeFrutas[i][j] === listaDeFrutas[i][j + 1] && listaDeFrutas[i][j + 1] === listaDeFrutas[i][j + 2]) {
+        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
+        const emoji1 = document.querySelector(`div[data-x='${i}'][data-y='${j + 1}']`)
+        const emoji2 = document.querySelector(`div[data-x='${i}'][data-y='${j + 2}']`)
+        emoji.style.backgroundColor = 'yellow'
+        emoji1.style.backgroundColor = 'yellow'
+        emoji2.style.backgroundColor = 'yellow'    
+                    
+      }
+               
+    }
+      
+  }
+  
+}
+
+botonMatch.onclick = () => {
+  encontrarMatchHorizontal()
 }
