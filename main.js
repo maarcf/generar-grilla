@@ -104,6 +104,29 @@ const encontrarMatchHorizontal = () => {
   
 }
 
+
+const encontrarMatchVertical = () => {
+  for (let i = 0; i < listaDeFrutas.length; i++) {
+      
+    for (let j = 0; j < listaDeFrutas[i].length; j++) {
+       
+      if (listaDeFrutas[i][j] === listaDeFrutas[i + 1][j] && listaDeFrutas[i + 1][j] === listaDeFrutas[i + 2][j]) {
+        const emoji = document.querySelector(`div[data-x='${i}'][data-y='${j}']`)
+        const emoji1 = document.querySelector(`div[data-x='${i + 1}'][data-y='${j}']`)
+        const emoji2 = document.querySelector(`div[data-x='${i + 2}'][data-y='${j}']`)
+        emoji.style.backgroundColor = 'orange'
+        emoji1.style.backgroundColor = 'orange'
+        emoji2.style.backgroundColor = 'orange'    
+                    
+      }
+               
+    }
+      
+  }
+
+}
+
 botonMatch.onclick = () => {
   encontrarMatchHorizontal()
+  encontrarMatchVertical()
 }
